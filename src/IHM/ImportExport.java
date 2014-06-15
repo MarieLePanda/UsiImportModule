@@ -6,7 +6,8 @@
 
 package IHM;
 
-import javax.swing.ButtonGroup;
+
+import javax.swing.JFileChooser;
 
 /**
  *
@@ -17,7 +18,6 @@ public class ImportExport extends javax.swing.JFrame {
     /**
      * Creates new form ImportExport
      */
-    private int i = 0;
     public ImportExport() {
         initComponents();
         buttonGroup1.add(jRadioButtonExport);
@@ -181,9 +181,16 @@ public class ImportExport extends javax.swing.JFrame {
         if(jPanelRadio.isVisible()){
             jPanelRadio.setVisible(false);
             jPanelList.setVisible(true);
+            if(jRadioButtonImport.isSelected())
+                jLabelList.setText(jLabelList.getText() + " importer");
+            else
+                jLabelList.setText(jLabelList.getText() + " exporter");
         }else if(jPanelList.isVisible() && jRadioButtonImport.isSelected()){
             jPanelList.setVisible(false);
             jPanelFile.setVisible(true);
+            JFileChooser jf = new JFileChooser("aaaa");
+            jPanelFile.add(jf);
+            jf.setVisible(true);
         }else{
             System.out.println("Export de l'objet " + jComboBoxTypeObject.getSelectedItem());
         }
