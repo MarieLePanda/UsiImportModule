@@ -4,8 +4,6 @@
  */
 package usiimportmodule;
 
-import myObject.MetaModelObject;
-
 
 /**
  *

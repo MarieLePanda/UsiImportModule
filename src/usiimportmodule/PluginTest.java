@@ -11,6 +11,9 @@ import javax.swing.WindowConstants;
 import plugin.IModule;
 
 
+
+
+
 /**
  *
  * @author lug13995
@@ -19,6 +22,7 @@ public class PluginTest implements IModule{
     
     public PluginTest(){
          JOptionPane.showMessageDialog(null,"Hello world !! I'm pluging !!!!!");
+
 
     }
 
