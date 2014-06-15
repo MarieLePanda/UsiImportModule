@@ -4,8 +4,12 @@
  */
 package usiimportmodule;
 
+import IHM.ImportExport;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
+import javax.swing.WindowConstants;
 import plugin.IModule;
+
 
 /**
  *
@@ -27,9 +31,23 @@ public class PluginTest implements IModule{
     public void unplug() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    
+    @Override
+    public void start() {
+        Runnable r = new Runnable(){
+            public void run(){
+                ImportExport win = new ImportExport();
+                win.setVisible(true);
+                win.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE); 
+            }
+        };
+        SwingUtilities.invokeLater(r);
+    }
 
     @Override
     public String getName() {
-        return "Mon premier pluging";
+        return "Import\\Export";
     }
+
+    
 }

@@ -18,6 +18,7 @@ public class UsiImportModule {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        MetaModelObject o;
+       PluginTest plug = new PluginTest();
+       plug.start();
     }
 }
