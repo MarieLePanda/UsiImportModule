@@ -8,7 +8,9 @@ package IHM;
 
 
 import data.ExportSQL;
-import javax.swing.JFileChooser;
+import data.ImportSQL;
+import javax.swing.JOptionPane;
+import myObject.*;
 
 /**
  *
@@ -19,12 +21,15 @@ public class ImportExport extends javax.swing.JFrame {
     /**
      * Creates new form ImportExport
      */
+    
+    MetaModelObject object = new Segment();
     public ImportExport() {
         initComponents();
         buttonGroup1.add(jRadioButtonExport);
         buttonGroup1.add(jRadioButtonImport);
         jPanelList.setVisible(false);
         jPanelFile.setVisible(false);
+        jButtonNext.setEnabled(false);
         pack();
 
     }
@@ -47,6 +52,7 @@ public class ImportExport extends javax.swing.JFrame {
         jComboBoxTypeObject = new javax.swing.JComboBox();
         jPanelFile = new javax.swing.JPanel();
         jLabelFile = new javax.swing.JLabel();
+        jFileChooserImport = new javax.swing.JFileChooser();
         jPanelButton = new javax.swing.JPanel();
         jButtonNext = new javax.swing.JButton();
         jButtonCancel = new javax.swing.JButton();
@@ -54,43 +60,55 @@ public class ImportExport extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jRadioButtonImport.setText("Importer des objets dans la base de données");
+        jRadioButtonImport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButtonImportActionPerformed(evt);
+            }
+        });
 
         jRadioButtonExport.setText("Exporter des objets de la base de données");
+        jRadioButtonExport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButtonExportActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanelRadioLayout = new javax.swing.GroupLayout(jPanelRadio);
         jPanelRadio.setLayout(jPanelRadioLayout);
         jPanelRadioLayout.setHorizontalGroup(
             jPanelRadioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelRadioLayout.createSequentialGroup()
-                .addGap(107, 107, 107)
+                .addGap(27, 27, 27)
                 .addGroup(jPanelRadioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jRadioButtonExport)
-                    .addComponent(jRadioButtonImport))
-                .addContainerGap(94, Short.MAX_VALUE))
+                    .addComponent(jRadioButtonImport)
+                    .addComponent(jRadioButtonExport))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanelRadioLayout.setVerticalGroup(
             jPanelRadioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelRadioLayout.createSequentialGroup()
-                .addGap(32, 32, 32)
+                .addGap(23, 23, 23)
                 .addComponent(jRadioButtonImport)
                 .addGap(18, 18, 18)
                 .addComponent(jRadioButtonExport)
-                .addContainerGap(39, Short.MAX_VALUE))
+                .addContainerGap(48, Short.MAX_VALUE))
         );
 
         jLabelList.setText("Seléctionnez le type d'objet à ");
 
-        jComboBoxTypeObject.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBoxTypeObject.setModel(new javax.swing.DefaultComboBoxModel(object.getListOfTypeObject()));
 
         javax.swing.GroupLayout jPanelListLayout = new javax.swing.GroupLayout(jPanelList);
         jPanelList.setLayout(jPanelListLayout);
         jPanelListLayout.setHorizontalGroup(
             jPanelListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelListLayout.createSequentialGroup()
-                .addGap(121, 121, 121)
+                .addGap(41, 41, 41)
                 .addGroup(jPanelListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabelList)
-                    .addComponent(jComboBoxTypeObject, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jComboBoxTypeObject, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanelListLayout.createSequentialGroup()
+                        .addGap(32, 32, 32)
+                        .addComponent(jLabelList)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanelListLayout.setVerticalGroup(
@@ -98,28 +116,41 @@ public class ImportExport extends javax.swing.JFrame {
             .addGroup(jPanelListLayout.createSequentialGroup()
                 .addGap(24, 24, 24)
                 .addComponent(jLabelList)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(jComboBoxTypeObject, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(70, Short.MAX_VALUE))
+                .addContainerGap(63, Short.MAX_VALUE))
         );
 
         jLabelFile.setText("Seléctionnez le fichier à importer");
+
+        jFileChooserImport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jFileChooserImportActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanelFileLayout = new javax.swing.GroupLayout(jPanelFile);
         jPanelFile.setLayout(jPanelFileLayout);
         jPanelFileLayout.setHorizontalGroup(
             jPanelFileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelFileLayout.createSequentialGroup()
-                .addGap(128, 128, 128)
-                .addComponent(jLabelFile)
+                .addGroup(jPanelFileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelFileLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jFileChooserImport, javax.swing.GroupLayout.PREFERRED_SIZE, 593, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanelFileLayout.createSequentialGroup()
+                        .addGap(200, 200, 200)
+                        .addComponent(jLabelFile)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanelFileLayout.setVerticalGroup(
             jPanelFileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelFileLayout.createSequentialGroup()
-                .addGap(23, 23, 23)
+                .addGap(30, 30, 30)
                 .addComponent(jLabelFile)
-                .addContainerGap(104, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jFileChooserImport, javax.swing.GroupLayout.DEFAULT_SIZE, 353, Short.MAX_VALUE)
+                .addGap(4, 4, 4))
         );
 
         jButtonNext.setText("Suivant");
@@ -130,17 +161,22 @@ public class ImportExport extends javax.swing.JFrame {
         });
 
         jButtonCancel.setText("Annuler");
+        jButtonCancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonCancelActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanelButtonLayout = new javax.swing.GroupLayout(jPanelButton);
         jPanelButton.setLayout(jPanelButtonLayout);
         jPanelButtonLayout.setHorizontalGroup(
             jPanelButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelButtonLayout.createSequentialGroup()
-                .addGap(52, 52, 52)
+                .addGap(126, 126, 126)
                 .addComponent(jButtonNext)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButtonCancel)
-                .addGap(55, 55, 55))
+                .addGap(139, 139, 139))
         );
         jPanelButtonLayout.setVerticalGroup(
             jPanelButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -165,9 +201,9 @@ public class ImportExport extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanelRadio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanelList, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(1, 1, 1)
                 .addComponent(jPanelFile, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanelButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -189,13 +225,49 @@ public class ImportExport extends javax.swing.JFrame {
         }else if(jPanelList.isVisible() && jRadioButtonImport.isSelected()){
             jPanelList.setVisible(false);
             jPanelFile.setVisible(true);
-            JFileChooser jf = new JFileChooser("aaaa");
-            jPanelFile.add(jf);
-            jf.setVisible(true);
+            
         }else{
-            ExportSQL.exportSegment();
+            if(jPanelFile.isVisible()){
+                System.out.println("Import");
+            }else{
+                if(jComboBoxTypeObject.getSelectedItem().equals("Zone")){
+                    ExportSQL.exportSegment();
+                    JOptionPane.showMessageDialog(null, "Fichier export zone créé");
+                }else if(jComboBoxTypeObject.getSelectedItem().equals("Quartier")){
+                    ExportSQL.exportProcess();
+                    JOptionPane.showMessageDialog(null, "Fichier export quartier créé");
+                }else if(jComboBoxTypeObject.getSelectedItem().equals("Ilot")){
+                    ExportSQL.exportCapabilities();
+                    JOptionPane.showMessageDialog(null, "Fichier export ilot créé");
+                }else
+                    JOptionPane.showMessageDialog(null, "Fonctionnalité non implémenté");
+            }
         }
+        pack();
     }//GEN-LAST:event_jButtonNextActionPerformed
+
+    private void jButtonCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_jButtonCancelActionPerformed
+
+    private void jFileChooserImportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFileChooserImportActionPerformed
+        // TODO add your handling code here:
+        System.out.println(jFileChooserImport.getSelectedFile().toString());
+        ImportSQL.importSegment(jFileChooserImport.getSelectedFile());
+        JOptionPane.showMessageDialog(null, "Import effectué");
+        this.dispose();
+    }//GEN-LAST:event_jFileChooserImportActionPerformed
+
+    private void jRadioButtonImportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonImportActionPerformed
+        // TODO add your handling code here:
+        jButtonNext.setEnabled(true);
+    }//GEN-LAST:event_jRadioButtonImportActionPerformed
+
+    private void jRadioButtonExportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonExportActionPerformed
+        // TODO add your handling code here:
+        jButtonNext.setEnabled(true);
+    }//GEN-LAST:event_jRadioButtonExportActionPerformed
 
     /**
      * @param args the command line arguments
@@ -237,6 +309,7 @@ public class ImportExport extends javax.swing.JFrame {
     private javax.swing.JButton jButtonCancel;
     private javax.swing.JButton jButtonNext;
     private javax.swing.JComboBox jComboBoxTypeObject;
+    private javax.swing.JFileChooser jFileChooserImport;
     private javax.swing.JLabel jLabelFile;
     private javax.swing.JLabel jLabelList;
     private javax.swing.JPanel jPanelButton;
