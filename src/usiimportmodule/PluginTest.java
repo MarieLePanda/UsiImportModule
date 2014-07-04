@@ -8,7 +8,7 @@ import IHM.ImportExport;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
-import plugin.IModule;
+
 
 
 
@@ -18,7 +18,7 @@ import plugin.IModule;
  *
  * @author lug13995
  */
-public class PluginTest implements IModule{
+public class PluginTest implements plugin.IModule{
     
     public PluginTest(){
          JOptionPane.showMessageDialog(null,"Hello world !! I'm pluging !!!!!");
@@ -29,6 +29,7 @@ public class PluginTest implements IModule{
     @Override
     public void plug() {
        JOptionPane.showMessageDialog(null,"Je me plug");
+       data.database.ConnectionSql.getConnection();
     }
 
     @Override

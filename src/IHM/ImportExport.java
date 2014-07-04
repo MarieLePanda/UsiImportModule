@@ -7,6 +7,7 @@
 package IHM;
 
 
+import data.ExportSQL;
 import javax.swing.JFileChooser;
 
 /**
@@ -192,7 +193,7 @@ public class ImportExport extends javax.swing.JFrame {
             jPanelFile.add(jf);
             jf.setVisible(true);
         }else{
-            System.out.println("Export de l'objet " + jComboBoxTypeObject.getSelectedItem());
+            ExportSQL.exportSegment();
         }
     }//GEN-LAST:event_jButtonNextActionPerformed
 
