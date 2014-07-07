@@ -18,23 +18,19 @@ import javax.swing.WindowConstants;
  *
  * @author lug13995
  */
-public class PluginTest implements plugin.IModule{
+public class ImportExportPlugin implements plugin.IModule{
     
-    public PluginTest(){
-         JOptionPane.showMessageDialog(null,"Hello world !! I'm pluging !!!!!");
-
-
+    public ImportExportPlugin(){
     }
 
     @Override
     public void plug() {
-       JOptionPane.showMessageDialog(null,"Je me plug");
-       data.database.ConnectionSql.getConnection();
+
     }
 
     @Override
     public void unplug() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
     }
     
     @Override

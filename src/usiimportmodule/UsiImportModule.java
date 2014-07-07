@@ -16,7 +16,7 @@ public class UsiImportModule {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-       PluginTest plug = new PluginTest();
+       ImportExportPlugin plug = new ImportExportPlugin();
        plug.start();
     }
 }
