@@ -228,7 +228,13 @@ public class ImportExport extends javax.swing.JFrame {
             
         }else{
             if(jPanelFile.isVisible()){
-                System.out.println("Import");
+                if(jComboBoxTypeObject.getSelectedItem().equals("Responsible")){
+                    ImportSQL.importResponsible(jFileChooserImport.getSelectedFile());
+                    JOptionPane.showMessageDialog(null,"Import Responsable Effectué");   
+                }
+                else{
+                    JOptionPane.showMessageDialog(null,"Fonctionalité non implémentée");
+                }
             }else{
                 if(jComboBoxTypeObject.getSelectedItem().equals("Zone")){
                     ExportSQL.exportSegment();
@@ -240,7 +246,7 @@ public class ImportExport extends javax.swing.JFrame {
                     ExportSQL.exportCapabilities();
                     JOptionPane.showMessageDialog(null, "Fichier export ilot créé");
                 }else
-                    JOptionPane.showMessageDialog(null, "Fonctionnalité non implémenté");
+                    JOptionPane.showMessageDialog(null, "Fonctionnalité non implémentée");
             }
         }
         pack();
@@ -253,9 +259,8 @@ public class ImportExport extends javax.swing.JFrame {
 
     private void jFileChooserImportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFileChooserImportActionPerformed
         // TODO add your handling code here:
-        System.out.println(jFileChooserImport.getSelectedFile().toString());
-        ImportSQL.importSegment(jFileChooserImport.getSelectedFile());
-        JOptionPane.showMessageDialog(null, "Import effectué");
+        ImportSQL.importResponsible(jFileChooserImport.getSelectedFile());
+        JOptionPane.showMessageDialog(null,"Import Responsable Effectué");
         this.dispose();
     }//GEN-LAST:event_jFileChooserImportActionPerformed
 
